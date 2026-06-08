@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AETHER // Neo-Futuristic 3D Developer Portfolio</title>
+  <link rel="stylesheet" href="../portfolio.css">
+  
+  <!-- Tailwind CSS for modern neon design & layouts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cyberDark: '#080810',
+            cyberGray: '#12121e',
+            neonCyan: '#00f0ff',
+            neonMagenta: '#ff007f',
+            neonViolet: '#8b5cf6'
+          },
+          fontFamily: {
+            orbitron: ['Orbitron', 'sans-serif'],
+            inter: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts for Futuristic Feel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome for Premium Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Core Libraries: GSAP (Animation) + ScrollTrigger + Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Custom Cinematic Styling -->
+  <style>
+    body {
+      background-color: #080810;
+      color: #f3f4f6;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    /* Elegant Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #080810;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8b5cf6;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00f0ff;
+    }
+
+    /* Glassmorphism Classes */
+    .glass-card {
+      background: rgba(18, 18, 30, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      border-color: rgba(0, 240, 255, 0.4);
+      box-shadow: 0 12px 40px 0 rgba(0, 240, 255, 0.15);
+      transform: translateY(-5px);
+    }
+
+    /* Glow texts */
+    .text-glow-cyan {
+      text-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+    }
+    .text-glow-magenta {
+      text-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
+    }
+
+    /* Animated Gradients */
+    .bg-gradient-cyber {
+      background: linear-gradient(135deg, rgba(139,92,246,0.15) 0%, rgba(0,240,255,0.1) 100%);
+    }
+
+    /* Custom Cursor */
+    .custom-cursor {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #00f0ff;
+      border-radius: 50%;
+      position: fixed;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: width 0.2s, height 0.2s, background-color 0.2s;
+    }
+    .custom-cursor-dot {
+      width: 4px;
+      height: 4px;
+      background-color: #ff007f;
+      border-radius: 50%;
+      position: fixed;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Neon Overlay Gradients */
+    .neon-glow-sphere-1 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(139,92,246,0.2) 0%, rgba(0,0,0,0) 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .neon-glow-sphere-2 {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0,240,255,0.15) 0%, rgba(0,0,0,0) 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Cinematic Scanlines effect */
+    .scanlines {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.25) 50%
+      ), linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.03),
+        rgba(0, 255, 0, 0.01),
+        rgba(0, 0, 255, 0.03)
+      );
+      background-size: 100% 4px, 6px 100%;
+      z-index: 99;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+  </style>
+</head>
+<body class="bg-cyberDark antialiased text-gray-200">
+
+
+<!--navigation part-->
+<div class="fl-navbar">
+<div class="navpart">
+<div  class="navigation">
+  <ul>
+    <li class="list active">
+        <a href="#home_">
+            <span class="icon"><i class="fa-solid fa-house"></i></span>
+            <span class="text">Home</span>
+            <span class="circle"></span>
+        </a>
+    </li>
+
+    <li class="list ">
+        <a href="#about_">
+            <span class="icon"><i class="fa-regular fa-user"></i></span>
+            <span class="text">About</span>
+            <span class="circle"></span>
+        </a>
+    </li>
+
+    <li class="list">
+        <a href="#education_">
+            <span class="icon"><i class="fa-solid fa-graduation-cap"></i></span>
+            <span class="text">Education</span>
+            <span class="circle"></span>
+        </a>
+    </li>
+
+    <li class="list">
+        <a href="#skills_">
+            <span class="icon"><i class="fa-sharp fa-solid fa-chart-simple"></i></span>
+            <span class="text">Skills</span>
+            <span class="circle"></span>
+        </a>
+    </li>
+    <div class="indicator"></div>
+  </ul>
+</div>
+</div>
+</div>
+<!--End of navigation part-->
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Interactive Background Canvas (Three.js) -->
+  <div id="three-canvas-container" class="fixed top-0 left-0 w-full h-full -z-10 bg-cyberDark"></div>
+
+  <!-- Custom Premium Mouse Tracking -->
+  <div id="custom-cursor" class="custom-cursor hidden md:block"></div>
+  <div id="custom-cursor-dot" class="custom-cursor-dot hidden md:block"></div>
+
+  <!-- Scanlines Effect for Futuristic Aesthetic -->
+  <div class="scanlines"></div>
+
+  <!-- Ambient Light Sphere Overlays -->
+  <div class="neon-glow-sphere-1 top-10 left-[-100px]"></div>
+  <div class="neon-glow-sphere-2 bottom-[20%] right-[-100px]"></div>
+
+  <!-- Floating Audio/Aesthetics Controller UI -->
+  <!-- <div class="fixed top-6 right-6 z-50 flex items-center gap-4">
+    <button id="sound-toggle" class="glass-card px-4 py-2 rounded-full text-xs font-mono flex items-center gap-2 hover:text-neonCyan transition">
+      <i class="fa-solid fa-volume-xmark" id="sound-icon"></i>
+      <span id="sound-text">AMBIENT: OFF</span>
+    </button>
+    <div class="glass-card p-2 rounded-full flex gap-2">
+      <button onclick="changePrimaryColor('#00f0ff')" class="w-3 h-3 rounded-full bg-neonCyan focus:outline-none" title="Cyan"></button>
+      <button onclick="changePrimaryColor('#ff007f')" class="w-3 h-3 rounded-full bg-neonMagenta focus:outline-none" title="Magenta"></button>
+      <button onclick="changePrimaryColor('#a855f7')" class="w-3 h-3 rounded-full bg-purple-500 focus:outline-none" title="Violet"></button>
+    </div>
+  </div> -->
+
+  <!-- Header Navigation -->
+  <header class="fixed top-0 left-0 w-full z-40 px-6 py-6 md:px-12 flex justify-between items-center bg-gradient-to-b from-cyberDark to-transparent">
+    <a href="#" class="font-orbitron text-xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-neonCyan via-neonViolet to-neonMagenta hover:scale-105 transform transition duration-300">
+      NANDHINI<span class="text-neonCyan">.</span>DHANAPAL
+    </a>
+    <!-- <nav class="hidden md:flex items-center gap-8 font-mono text-xs tracking-widest text-gray-400">
+      <a href="#hero" class="hover:text-neonCyan transition-all duration-300 relative group">
+        01 // HOME
+        <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-neonCyan transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a href="#projects" class="hover:text-neonCyan transition-all duration-300 relative group">
+        02 // WORK
+        <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-neonCyan transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a href="#skills" class="hover:text-neonCyan transition-all duration-300 relative group">
+        03 // COGNITION
+        <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-neonCyan transition-all duration-300 group-hover:w-full"></span>
+      </a>
+      <a href="#contact" class="hover:text-neonCyan transition-all duration-300 relative group">
+        04 // LINK
+        <span class="absolute -bottom-1 left-0 w-0 h-[2px] bg-neonCyan transition-all duration-300 group-hover:w-full"></span>
+      </a>
+    </nav> -->
+    <!-- <a href="#contact" class="glass-card px-5 py-2.5 rounded-none font-orbitron text-xs tracking-widest hover:text-neonCyan transition border-neonCyan/30 border">
+      COMMISSION
+    </a> -->
+    <a href="tel:91+ 9600585006" id="contact-nowbtn"><i class="fa-solid fa-phone"></i>Contact Me</a>
+  </header>
+
+  <!-- Side Social / Status Panel -->
+  <div class="fixed bottom-12 left-12 z-30 hidden lg:flex flex-col gap-6 items-center">
+    <div class="h-24 w-[1px] bg-gradient-to-t from-neonCyan to-transparent"></div>
+    <a href="#" class="text-gray-500 hover:text-neonCyan transition hover:scale-125"><i class="fa-brands fa-github text-lg"></i></a>
+    <a href="#" class="text-gray-500 hover:text-neonCyan transition hover:scale-125"><i class="fa-brands fa-linkedin text-lg"></i></a>
+    <a href="#" class="text-gray-500 hover:text-neonCyan transition hover:scale-125"><i class="fa-brands fa-twitter text-lg"></i></a>
+    <span class="font-mono text-[10px] text-gray-500 tracking-widest uppercase vertical-text transform rotate-180 select-none">PORTFOLIO V2.5</span>
+  </div>
+
+  <!-- Main Content Wrapper (For GSAP Smooth Interaction) -->
+  <main id="smooth-wrapper">
+    <!-- section-1 start -->
+<div class="sec1" id="home_">
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center px-6 md:px-24 overflow-hidden z-10 pt-20">
+      <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Hero Text content -->
+        <div class="lg:col-span-7 flex flex-col justify-center space-y-6">
+          <div class="inline-flex items-center gap-2 font-mono text-xs tracking-wider bg-neonCyan/10 text-neonCyan border border-neonCyan/20 px-3 py-1.5 rounded-full w-fit">
+            <span class="w-2 h-2 rounded-full bg-neonCyan animate-ping"></span>
+            ACTIVE CONTEXT // NEURAL SYSTEMS DEVELOPER
+          </div>
+          
+          <h1 class="font-orbitron font-black text-5xl md:text-7xl lg:text-8xl tracking-tighter leading-none uppercase text-white">
+            <span class="block text-glow-cyan">Frontend</span>
+            <span class="block text-transparent bg-clip-text bg-gradient-to-r from-neonCyan via-neonViolet to-neonMagenta">Developer</span>
+          </h1>
+
+           <!-- <p class="text-gray-400 font-inter text-base md:text-lg max-w-xl font-light leading-relaxed">
+            Architecting interactive visual realities using cutting-edge 3D mathematical vectors, reactive cyber-interfaces, and advanced machine intelligence logic.
+          </p>  -->
+          
+<p>Architecting interactive visual realities using cutting-edge 3D mathematical vectors, reactive cyber-interfaces, and advanced machine intelligence logicArchitecting interactive visual realities using cutting-edge 3D mathematical vectors, reactive cyber-interfaces, and advanced machine intelligence logic</p>
+
+          <!-- Interactive 3D Control Center integrated into UI -->
+           <div class="glass-card p-5 rounded-xl max-w-md flex flex-col gap-4 border border-white/5">
+            <div class="flex items-center justify-between">
+              <!-- <span class="font-mono text-[10px] text-neonCyan tracking-widest flex items-center gap-2">
+                <i class="fa-solid fa-microchip"></i> QUANTUM COMPANION CALIBRATION
+              </span> -->
+              <!-- <span class="font-mono text-[10px] text-gray-500">SYS_STATUS: OPTIMAL</span> -->
+            </div> 
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <!-- <label class="block font-mono text-[10px] text-gray-400 mb-1">SPEED MATRIX</label> -->
+                <input id="control-speed" type="range" min="0.1" max="5.0" step="0.1" value="1.0" class="w-full accent-neonCyan bg-cyberDark cursor-pointer h-1 rounded-lg">
+              </div>
+              <div>
+                <!-- <label class="block font-mono text-[10px] text-gray-400 mb-1">PARTICLE ENERGY</label> -->
+                 <input id="control-energy" type="range" min="100" max="1500" step="50" value="700" class="w-full accent-neonMagenta bg-cyberDark cursor-pointer h-1 rounded-lg"> 
+              </div>
+            </div>
+            <div class="flex justify-between items-center text-[11px] font-mono text-gray-400">
+              <!-- <span>COLOR PRESET</span>
+              <div class="flex gap-1.5">
+                <button onclick="setSystemPreset('cyberspace')" class="px-2 py-0.5 border border-neonCyan/30 text-neonCyan hover:bg-neonCyan/10 rounded text-[9px]">CYBERSPACE</button>
+                <button onclick="setSystemPreset('hyperdrive')" class="px-2 py-0.5 border border-neonMagenta/30 text-neonMagenta hover:bg-neonMagenta/10 rounded text-[9px]">HYPERDRIVE</button>
+              </div> -->
+            </div>
+          </div>
+
+          <!-- <div class="flex flex-wrap gap-4 pt-4">
+            <a href="#projects" class="group relative px-8 py-4 bg-gradient-to-r from-neonCyan to-neonViolet rounded-none text-black font-orbitron font-bold text-sm tracking-widest hover:shadow-[0_0_25px_rgba(0,240,255,0.5)] transition duration-300">
+              DISCOVER PROTOCOLS
+            </a>
+            <a href="#contact" class="px-8 py-4 bg-transparent border border-white/10 hover:border-neonMagenta hover:text-neonMagenta rounded-none font-orbitron text-sm tracking-widest transition duration-300 flex items-center gap-2">
+              INITIATE SYNC <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+          </div> -->
+        </div>
+
+        <!-- Right Side: Cinematic Indicator Panel -->
+
+        <!-- right side circl -->
+         <div class="bx-circle">
+
+    <div class="center-circle">
+        <h2>SKILLS</h2>
+    </div>
+
+    <!-- Outer Circle -->
+    <div class="orbit orbit1">
+        <i class="fab fa-html5 icon html"></i>
+        <i class="fab fa-css3-alt icon css"></i>
+        <i class="fab fa-js icon js"></i>
+    </div>
+
+    <!-- Inner Circle -->
+    <div class="orbit orbit2">
+        <i class="fab fa-bootstrap icon bootstrap"></i>
+        <i class="fab fa-github icon github"></i>
+        <i class="fas fa-code icon code"></i>
+    </div>
+
+</div>
+<!-- script add circle -->
+
+<script src="script.js"></script>
+<script>
+    const orbit1 = document.querySelector(".orbit1");
+const orbit2 = document.querySelector(".orbit2");
+
+let angle1 = 0;
+let angle2 = 0;
+
+function animate() {
+
+    angle1 += 0.4; // Clockwise
+    angle2 -= 0.7; // Anti-clockwise
+
+    orbit1.style.transform = `rotate(${angle1}deg)`;
+    orbit2.style.transform = `rotate(${angle2}deg)`;
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+ <!-- end of section 1 -->
+ <!-- end of scrip add   -->
+         <!-- end of right side circle -->
+        <!-- <div class="lg:col-span-5 flex flex-col justify-center items-end hidden lg:flex">
+          <div class="glass-card p-6 w-72 rounded-xl flex flex-col gap-4 font-mono text-xs border border-white/5 relative overflow-hidden group">
+            <div class="absolute top-0 right-0 w-1.5 h-full bg-neonCyan"></div>
+            <div class="flex items-center gap-2 text-neonCyan">
+              <i class="fa-solid fa-fingerprint animate-pulse text-lg"></i>
+              <span class="tracking-widest font-bold">SYSTEM METRIC</span>
+            </div>
+            <div class="space-y-2 mt-2">
+              <div class="flex justify-between">
+                <span class="text-gray-500">LATENCY</span>
+                <span id="metric-latency" class="text-white">12ms</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-500">RENDER LOOP</span>
+                <span id="metric-fps" class="text-white">60 FPS</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-500">MEMORY ALLOC</span>
+                <span class="text-white">41.8 MB</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-500">COGNITION ID</span>
+                <span class="text-neonCyan text-[10px]">AETHER-B25</span>
+              </div>
+            </div>
+            <div class="border-t border-white/10 pt-3 text-[10px] text-gray-400">
+              The 3D canvas represents an interactive neural engine mesh. Drag on empty space to modify dimensions.
+            </div>
+          </div>
+        </div> -->
+
+      </div>
+      
+      <!-- Scroll Indicator -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-20" onclick="document.getElementById('projects').scrollIntoView()">
+        <span class="font-mono text-[9px] tracking-widest text-gray-500 hover:text-neonCyan transition">SCROLL ENTRY</span>
+        <div class="w-5 h-10 border border-white/20 rounded-full flex justify-center p-1">
+          <div class="w-1 h-2 bg-neonCyan rounded-full animate-bounce"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO PROJECTS SECTION -->
+    <section id="projects" class="relative py-32 px-6 md:px-24 z-10 min-h-screen bg-cyberGray/30">
+      <div class="max-w-6xl mx-auto">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col space-y-4 mb-20">
+          <span class="font-mono text-neonMagenta text-xs tracking-widest flex items-center gap-2">
+            <span class="w-1.5 h-1.5 bg-neonMagenta"></span> SEC_02 // COMPLETED EXPERIMENTS
+          </span>
+          <h2 class="font-orbitron font-black text-4xl md:text-6xl text-white tracking-tight">
+            NEO PORTFOLIO ARCHIVE
+          </h2>
+
+          <div class="w-24 h-1 bg-gradient-to-r from-neonMagenta to-transparent"></div>
+
+          <!-- about section 2-->
+           <div class="about-section" id="about_">
+            <div class="container">
+              <div class="inner-about-section">
+                    <div class="left-about-section">
+                      <img src="./images/abt-grl-2.png">
+                    </div>
+                     <div class="right-about-section">
+                      <h3>Building modern, responsive, and user-friendly<span> web experiences through clean code and creative design</span></h3>
+                      <p>I’m a passionate Frontend Developer who creates modern, responsive, and interactive websites with clean UI and smooth user experiences. I focus on building fast, user-friendly digital experiences using HTML, CSS, JavaScript, and modern web technologies.</p>
+                      <div class="ab-btn">
+
+                     <a href="#" class="slide-btn">Click Here</a>
+                     </div>
+                     </div>
+              </div>
+              
+            </div>
+           </div>
+           <!-- end of about section 2-->
+        </div>
+
+        <!-- Cinematic Project Cards Grid -->
+        <!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+         
+          <div class="glass-card rounded-2xl overflow-hidden flex flex-col border border-white/5 relative group">
+            <div class="h-48 relative overflow-hidden bg-gradient-to-br from-cyberGray to-cyberDark flex items-center justify-center p-6">
+              <div class="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-40 transition-transform duration-750 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80')"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-cyberDark to-transparent"></div>
+              <span class="font-orbitron font-black text-5xl text-neonCyan/20 tracking-wider absolute">CYBER_NET</span>
+             
+              <span class="absolute top-4 right-4 bg-neonCyan/10 text-neonCyan text-[10px] font-mono px-2.5 py-1 rounded border border-neonCyan/20">WebGL / GLSL</span>
+            </div>
+            
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 class="font-orbitron text-xl font-bold text-white mb-2 group-hover:text-neonCyan transition">KRYPTON ENGINE</h3>
+                <p class="text-sm text-gray-400 font-light leading-relaxed mb-4">
+                  GPU-driven fluid dynamics pipeline allowing hyper-speed particle orchestration with real-time audio analysis.
+                </p>
+              </div>
+              <div class="flex items-center justify-between border-t border-white/10 pt-4 mt-2">
+                <span class="font-mono text-[10px] text-gray-500">PROJECT CODE // 001</span>
+                <button onclick="openProjectModal('Krypton Engine', 'This experiment implements a cutting-edge GPGPU simulation logic. Processing particles completely in parallel inside fragment shaders to preserve frames. Dynamic wind vortex vector fields respond fluidly to micro-microphone inputs.', 'WebGL, Three.js, GLSL, WebAudio API')" class="font-mono text-xs text-neonCyan hover:underline flex items-center gap-1.5">
+                  INITIALIZE <i class="fa-solid fa-circle-play"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="glass-card rounded-2xl overflow-hidden flex flex-col border border-white/5 relative group">
+            <div class="h-48 relative overflow-hidden bg-gradient-to-br from-cyberGray to-cyberDark flex items-center justify-center p-6">
+              <div class="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-40 transition-transform duration-750 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=800&q=80')"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-cyberDark to-transparent"></div>
+              <span class="font-orbitron font-black text-5xl text-neonMagenta/20 tracking-wider absolute">SYNAPSE</span>
+              
+              <span class="absolute top-4 right-4 bg-neonMagenta/10 text-neonMagenta text-[10px] font-mono px-2.5 py-1 rounded border border-neonMagenta/20">Three.js / React</span>
+            </div>
+            
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 class="font-orbitron text-xl font-bold text-white mb-2 group-hover:text-neonMagenta transition">NEURAL INTERACTIVE</h3>
+                <p class="text-sm text-gray-400 font-light leading-relaxed mb-4">
+                  A high-fidelity graphical user interface translating cerebral wave arrays into interactive spatial nodes.
+                </p>
+              </div>
+              <div class="flex items-center justify-between border-t border-white/10 pt-4 mt-2">
+                <span class="font-mono text-[10px] text-gray-500">PROJECT CODE // 002</span>
+                <button onclick="openProjectModal('Neural Interactive', 'An analytical concept designed for mental wave visual diagnostics. Built using custom shaders representing synapse networks that fire in a high-octane WebGL workspace.', 'Three.js, React Three Fiber, Custom Shaders')" class="font-mono text-xs text-neonMagenta hover:underline flex items-center gap-1.5">
+                  INITIALIZE <i class="fa-solid fa-circle-play"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="glass-card rounded-2xl overflow-hidden flex flex-col border border-white/5 relative group">
+            <div class="h-48 relative overflow-hidden bg-gradient-to-br from-cyberGray to-cyberDark flex items-center justify-center p-6">
+              <div class="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-40 transition-transform duration-750 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?auto=format&fit=crop&w=800&q=80')"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-cyberDark to-transparent"></div>
+              <span class="font-orbitron font-black text-5xl text-neonViolet/20 tracking-wider absolute">OVERLORD</span>
+              
+              <span class="absolute top-4 right-4 bg-neonViolet/10 text-neonViolet text-[10px] font-mono px-2.5 py-1 rounded border border-neonViolet/20">Next.js / GSAP</span>
+            </div>
+            
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 class="font-orbitron text-xl font-bold text-white mb-2 group-hover:text-neonViolet transition">CHRONOS TERMINAL</h3>
+                <p class="text-sm text-gray-400 font-light leading-relaxed mb-4">
+                  Multi-dimensional cinematic visual terminal optimizing page routing via elegant, timeline-staggered custom animations.
+                </p>
+              </div>
+              <div class="flex items-center justify-between border-t border-white/10 pt-4 mt-2">
+                <span class="font-mono text-[10px] text-gray-500">PROJECT CODE // 003</span>
+                <button onclick="openProjectModal('Chronos Terminal', 'A super fast multi-route developer architecture leveraging seamless page transitions, integrated with micro-glitches and WebGL ambient backgrounds.', 'Next.js, Tailwind, GSAP Timeline')" class="font-mono text-xs text-neonViolet hover:underline flex items-center gap-1.5">
+                  INITIALIZE <i class="fa-solid fa-circle-play"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div> -->
+
+        
+     
+
+      </div>
+    </section>
+    
+    <!-- end of section 2-->
+     <!-- section 3 -->
+    <!-- table section star -->
+     <div class="" id="education_">
+     <section class="education">
+
+<h1 class="edu-title">
+🎓 EDUCATION ARCHIVE
+</h1>
+
+<div class="edu-container">
+
+<div class="edu-card">
+<h2>SSLC</h2>
+
+<p>
+Government Girls Higher Secondary School,
+Erode
+</p>
+
+<span>State Board</span>
+
+<div class="info">
+<div>2017</div>
+<div>73.04%</div>
+</div>
+
+</div>
+
+<div class="edu-card">
+
+<h2>HSC</h2>
+
+<p>
+Government Girls Higher Secondary School,
+Erode
+</p>
+
+<span>State Board</span>
+
+<div class="info">
+<div>2019</div>
+<div>53.02%</div>
+</div>
+
+</div>
+
+<div class="edu-card">
+
+<h2>BCA</h2>
+
+<p>
+K.S.R College of Arts and Science for Women
+</p>
+
+<span>Periyar University</span>
+
+<div class="info">
+<div>2022</div>
+<div>8.18 CGPA</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+</div>
+<!-- end of section 3 -->
+     <!-- end of table section -->
+
+    <!-- COGNITION / CODESKILLS SECTION -->
+     <!-- section 4  -->
+      <div class="" id="skills_">
+    <section id="skills" class="relative py-32 px-6 md:px-24 z-10 min-h-screen">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          
+          <!-- Left side: Skill Bars / Terminal -->
+          <div class="space-y-8 order-2 lg:order-1">
+            <div class="flex flex-col space-y-4">
+              <span class="font-mono text-neonCyan text-xs tracking-widest flex items-center gap-2">
+                <span class="w-1.5 h-1.5 bg-neonCyan"></span> SEC_03 // COMPUTATIONAL CAPACITY
+              </span>
+              <h2 class="font-orbitron font-black text-4xl md:text-5xl text-white tracking-tight leading-tight">
+                CEREBRAL TECHNOLOGY MATRIX
+              </h2>
+            </div>
+
+            <!-- Terminal-styled Capability Indicators -->
+            <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-6">
+              
+              <!-- Skill Item -->
+              <div>
+                <div class="flex justify-between font-mono text-xs text-gray-300 mb-2">
+                  <span class="flex items-center gap-2"><i class="fa-solid fa-cube text-neonCyan"></i> WEBGL / THREE.JS PHYSICS</span>
+                  <span class="text-neonCyan font-bold">95%</span>
+                </div>
+                <div class="w-full bg-cyberDark h-2 rounded-full overflow-hidden border border-white/10">
+                  <div class="bg-gradient-to-r from-neonCyan to-neonViolet h-full w-[95%] rounded-full shadow-[0_0_10px_rgba(0,240,255,0.7)]"></div>
+                </div>
+              </div>
+
+              <!-- Skill Item -->
+              <div>
+                <div class="flex justify-between font-mono text-xs text-gray-300 mb-2">
+                  <span class="flex items-center gap-2"><i class="fa-solid fa-code text-neonMagenta"></i> MODERN JS & REACT PLATFORMS</span>
+                  <span class="text-neonMagenta font-bold">90%</span>
+                </div>
+                <div class="w-full bg-cyberDark h-2 rounded-full overflow-hidden border border-white/10">
+                  <div class="bg-gradient-to-r from-neonMagenta to-neonViolet h-full w-[90%] rounded-full shadow-[0_0_10px_rgba(255,0,127,0.7)]"></div>
+                </div>
+              </div>
+
+              <!-- Skill Item -->
+              <div>
+                <div class="flex justify-between font-mono text-xs text-gray-300 mb-2">
+                  <span class="flex items-center gap-2"><i class="fa-solid fa-wind text-neonCyan"></i> TAILWIND DESIGN FRAMEWORK</span>
+                  <span class="text-neonCyan font-bold">85%</span>
+                </div>
+                <div class="w-full bg-cyberDark h-2 rounded-full overflow-hidden border border-white/10">
+                  <div class="bg-gradient-to-r from-neonCyan to-neonViolet h-full w-[85%] rounded-full shadow-[0_0_10px_rgba(0,240,255,0.7)]"></div>
+                </div>
+              </div>
+
+              <!-- Skill Item -->
+              <div>
+                <div class="flex justify-between font-mono text-xs text-gray-300 mb-2">
+                  <span class="flex items-center gap-2"><i class="fa-solid fa-chart-line text-neonViolet"></i> SHADER MATH / GEOMETRY</span>
+                  <span class="text-neonViolet font-bold">80%</span>
+                </div>
+                <div class="w-full bg-cyberDark h-2 rounded-full overflow-hidden border border-white/10">
+                  <div class="bg-gradient-to-r from-neonViolet to-neonMagenta h-full w-[80%] rounded-full shadow-[0_0_10px_rgba(139,92,246,0.7)]"></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- right side last section -->
+           <div class="res-cont">
+        <div class="contact-box">
+
+<h2>CONTACT</h2>
+
+<p>📧 nandhini@gmail.com</p>
+
+<p>📞 +91 98765 43210</p>
+
+<p>📍 Tamil Nadu, India</p>
+
+<p>💼 Frontend Developer</p>
+
+<a href="#">Contact Me →</a>
+
+</div>
+<div class="ai-girl">
+  <img src="./images/contact.png">
+</div>
+</div>
+
+           <!-- end of riht last section -->
+          <!-- <div class="glass-card p-8 rounded-2xl border border-white/5 space-y-6 order-1 lg:order-2 flex flex-col justify-center relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-40 h-40 bg-neonViolet/10 rounded-full blur-3xl"></div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-neonCyan/10 border border-neonCyan/30 flex items-center justify-center">
+                  <i class="fa-solid fa-terminal text-neonCyan"></i>
+                </div>
+                <div>
+                  <h3 class="font-orbitron text-lg font-bold text-white">ENGINE STATUS</h3>
+                  <p class="font-mono text-[9px] text-gray-400">AETHERCORE DRIVER V4.9</p>
+                </div>
+              </div>
+              <span class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-mono border border-green-500/20 rounded-full">SECURE SYNC</span>
+            </div>
+
+            
+            <div class="bg-cyberDark/80 rounded-xl p-4 font-mono text-xs text-gray-400 space-y-2 border border-white/10">
+              <div class="text-green-400">&gt; npm install aether-visuals</div>
+              <div>[INFO] Spawning three.js virtual environment...</div>
+              <div>[INFO] Binding custom GSAP triggers dynamically...</div>
+              <div>[WARN] Core temp glowing - Fan speed adjusted</div>
+              <div class="text-neonCyan">&gt; status = "Awaiting deployment to production"</div>
+            </div>
+
+            <div class="flex justify-between items-center bg-white/5 rounded-xl p-4">
+              <div>
+                <div class="text-2xl font-orbitron font-bold text-white">500,000+</div>
+                <div class="text-[10px] font-mono text-gray-400">RENDERED POLYGONS / SEC</div>
+              </div>
+              <div>
+                <div class="text-2xl font-orbitron font-bold text-neonMagenta">100%</div>
+                <div class="text-[10px] font-mono text-gray-400">RESPONSIVE FRAME RATE</div>
+              </div>
+            </div>
+          </div> -->
+
+        </div>
+      </div>
+    </section>
+    </div>
+<!-- end of section 4 -->
+    <!-- CONTACT & SUBMISSION SECTION -->
+    <!-- <section id="contact" class="relative py-32 px-6 md:px-24 z-10 min-h-screen bg-cyberGray/30">
+      <div class="max-w-4xl mx-auto">
+        
+        
+         <div class="flex flex-col items-center text-center space-y-4 mb-16">
+          <span class="font-mono text-neonMagenta text-xs tracking-widest flex items-center gap-2 justify-center">
+            <span class="w-1.5 h-1.5 bg-neonMagenta"></span> SEC_04 // INITIATE COMMS
+          </span>
+          <h2 class="font-orbitron font-black text-4xl md:text-6xl text-white tracking-tight">
+            ESTABLISH CONNECTION
+          </h2>
+          <p class="text-gray-400 max-w-lg font-light">
+            Ready to deploy gorgeous cinematic interactive 3D structures? Drop an encrypted ping to construct your experience.
+          </p>
+        </div> 
+
+        
+        <div class="glass-card rounded-2xl p-8 md:p-12 border border-white/5 relative overflow-hidden">
+          <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              
+             
+              <div class="space-y-2 relative">
+                <label class="font-mono text-xs text-gray-400 uppercase tracking-widest">CALLSIGN / NAME</label>
+                <div class="relative">
+                  <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"><i class="fa-solid fa-user"></i></span>
+                  <input type="text" id="form-name" required placeholder="eg. Commander Shepard" 
+                    class="w-full bg-cyberDark/60 border border-white/10 focus:border-neonCyan focus:ring-1 focus:ring-neonCyan rounded-lg pl-12 pr-4 py-4 text-white placeholder-gray-600 outline-none transition font-sans">
+                </div>
+              </div>
+
+              
+              <div class="space-y-2 relative">
+                <label class="font-mono text-xs text-gray-400 uppercase tracking-widest">ENCRYPTED NET ADDRESS</label>
+                <div class="relative">
+                  <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"><i class="fa-solid fa-envelope"></i></span>
+                  <input type="email" id="form-email" required placeholder="eg. email@quantum-net.com" 
+                    class="w-full bg-cyberDark/60 border border-white/10 focus:border-neonMagenta focus:ring-1 focus:ring-neonMagenta rounded-lg pl-12 pr-4 py-4 text-white placeholder-gray-600 outline-none transition font-sans">
+                </div>
+              </div>
+
+            </div>
+
+           
+            <div class="space-y-2">
+              <label class="font-mono text-xs text-gray-400 uppercase tracking-widest">PROTOCOL MOTIVE</label>
+              <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"><i class="fa-solid fa-compass"></i></span>
+                <input type="text" id="form-subject" placeholder="eg. Cinematic Brand Interface Deployment" 
+                  class="w-full bg-cyberDark/60 border border-white/10 focus:border-neonCyan focus:ring-1 focus:ring-neonCyan rounded-lg pl-12 pr-4 py-4 text-white placeholder-gray-600 outline-none transition font-sans">
+              </div>
+            </div>
+
+            
+            <div class="space-y-2">
+              <label class="font-mono text-xs text-gray-400 uppercase tracking-widest">TRANSMISSION BODY</label>
+              <textarea id="form-message" rows="5" required placeholder="Type the transmission details..." 
+                class="w-full bg-cyberDark/60 border border-white/10 focus:border-neonMagenta focus:ring-1 focus:ring-neonMagenta rounded-lg p-4 text-white placeholder-gray-600 outline-none transition font-sans"></textarea>
+            </div>
+
+           
+            <div class="flex justify-center">
+              <button type="submit" class="w-full md:w-auto px-12 py-5 bg-gradient-to-r from-neonCyan via-neonViolet to-neonMagenta text-black font-orbitron font-extrabold text-sm tracking-widest uppercase hover:shadow-[0_0_30px_rgba(0,240,255,0.6)] hover:scale-105 transform transition duration-300">
+                SEND QUANTUM PING <i class="fa-solid fa-paper-plane ml-2"></i>
+              </button>
+            </div>
+          </form>
+
+        
+          <div id="contact-success-msg" class="hidden absolute inset-0 bg-cyberDark/95 flex flex-col items-center justify-center text-center p-8 transition-all duration-500">
+            <div class="w-20 h-20 bg-neonCyan/10 border-2 border-neonCyan rounded-full flex items-center justify-center mb-6 animate-pulse">
+              <i class="fa-solid fa-circle-check text-neonCyan text-4xl"></i>
+            </div>
+            <h3 class="font-orbitron text-2xl font-bold text-white mb-2">TRANSMISSION DELIVERED</h3>
+            <p class="text-sm text-gray-400 max-w-md font-light mb-6">
+              Your transmission has successfully bypassed neural filters and landed in the designated dynamic port. Synchronization expected in under 12 cycles.
+            </p>
+            <button onclick="dismissSuccessMessage()" class="px-6 py-2 border border-white/10 hover:border-neonCyan text-white text-xs font-mono tracking-widest uppercase transition">
+              CLOSE PROTOCOL
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section> -->
+
+    <!-- FOOTER -->
+    <footer class="py-12 border-t border-white/5 relative z-10 px-6 md:px-24">
+      <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-3">
+          <span class="font-orbitron text-lg font-black tracking-widest text-white">AETHER</span>
+          <span class="text-xs font-mono text-gray-500">© 2026 // ALL COGNITIVE CHANNELS RESERVED</span>
+        </div>
+        <div class="flex gap-6 font-mono text-xs text-gray-500">
+          <a href="#" class="hover:text-neonCyan transition">PRIVACY_STRICT</a>
+          <a href="#" class="hover:text-neonCyan transition">NET_TERMS</a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Premium Cinematic Project Preview Modal Overlay -->
+  <div id="project-modal" class="fixed inset-0 z-50 bg-cyberDark/90 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-card max-w-xl w-full rounded-2xl overflow-hidden border border-neonCyan/20">
+      <div class="p-6 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-cyberGray to-transparent">
+        <h3 id="modal-title" class="font-orbitron text-2xl font-black text-neonCyan tracking-wider">PROJECT</h3>
+        <button onclick="closeProjectModal()" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-neonMagenta hover:text-white transition">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+      <div class="p-8 space-y-4 text-gray-300">
+        <div>
+          <h4 class="font-mono text-xs text-neonMagenta tracking-widest mb-1">LOGICAL ANALYSIS</h4>
+          <p id="modal-desc" class="text-sm leading-relaxed text-gray-300 font-light">Description will sit here.</p>
+        </div>
+        <div class="pt-4 border-t border-white/10">
+          <h4 class="font-mono text-xs text-gray-400 tracking-widest mb-2">SYSTEM TECH STACK</h4>
+          <div id="modal-stack" class="flex flex-wrap gap-2">
+            <!-- Dynamic tags -->
+          </div>
+        </div>
+      </div>
+      <div class="p-6 border-t border-white/5 bg-cyberDark flex justify-end">
+        <button onclick="closeProjectModal()" class="px-6 py-2.5 bg-neonCyan text-black font-orbitron font-bold text-xs tracking-widest hover:shadow-lg transition">
+          DISCONNECT PROTOCOL
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Context Synthesizer Engine -->
+  <script>
+    // WebAudio API Synth Setup to generate sci-fi ambient sweep
+    let audioCtx = null;
+    let mainOscillator = null;
+    let mainGain = null;
+    let isPlayingAmbient = false;
+
+    function initAmbientAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      // Deep space atmospheric ambient pad
+      mainOscillator = audioCtx.createOscillator();
+      const biquadFilter = audioCtx.createBiquadFilter();
+      mainGain = audioCtx.createGain();
+
+      // Configure a warm, deep low-pass sine/triangle hybrid wave
+      mainOscillator.type = 'triangle';
+      mainOscillator.frequency.setValueAtTime(65, audioCtx.currentTime); // C2 Note
+
+      // Gentle filter sweep
+      biquadFilter.type = 'lowpass';
+      biquadFilter.frequency.setValueAtTime(300, audioCtx.currentTime);
+
+      // Low Volume
+      mainGain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+      mainGain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 3);
+
+      // Connections
+      mainOscillator.connect(biquadFilter);
+      biquadFilter.connect(mainGain);
+      mainGain.connect(audioCtx.destination);
+
+      mainOscillator.start();
+
+      // Gentle continuous ambient oscillation pitch drift
+      let direction = 1;
+      setInterval(() => {
+        if (mainOscillator && isPlayingAmbient) {
+          const currentFreq = mainOscillator.frequency.value;
+          const target = currentFreq + (direction * 0.5);
+          if (target > 70) direction = -1;
+          if (target < 60) direction = 1;
+          mainOscillator.frequency.setValueAtTime(target, audioCtx.currentTime);
+        }
+      }, 300);
+    }
+
+    // Interactive button toggle
+    const soundToggle = document.getElementById('sound-toggle');
+    const soundIcon = document.getElementById('sound-icon');
+    const soundText = document.getElementById('sound-text');
+
+    soundToggle.addEventListener('click', () => {
+      if (!isPlayingAmbient) {
+        try {
+          initAmbientAudio();
+          isPlayingAmbient = true;
+          soundIcon.className = "fa-solid fa-volume-high text-neonCyan";
+          soundText.innerText = "AMBIENT: ON";
+          soundText.classList.add("text-neonCyan");
+        } catch (e) {
+          console.warn("Audio Context denied.", e);
+        }
+      } else {
+        if (mainGain) {
+          mainGain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+          setTimeout(() => {
+            mainOscillator.stop();
+            mainOscillator = null;
+          }, 600);
+        }
+        isPlayingAmbient = false;
+        soundIcon.className = "fa-solid fa-volume-xmark";
+        soundText.innerText = "AMBIENT: OFF";
+        soundText.classList.remove("text-neonCyan");
+      }
+    });
+
+    // Custom Interactive Micro-Sound Effect
+    function playBeepSound(frequency = 600, duration = 0.08, type = 'sine') {
+      if (!isPlayingAmbient || !audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (err) {}
+    }
+
+    // Attach beep feedback to buttons
+    document.querySelectorAll('button, a').forEach(el => {
+      el.addEventListener('mouseenter', () => playBeepSound(850, 0.04));
+      el.addEventListener('click', () => playBeepSound(1200, 0.15, 'triangle'));
+    });
+  </script>
+
+  <!-- Interactive 3D Three.js Simulation Code -->
+  <script>
+    let scene, camera, renderer, particles;
+    let floatingCoreMesh, coreOuterWires, ambientParticleGrid;
+    let customColorPrimary = new THREE.Color(0x00f0ff);
+    let rotationSpeedFactor = 1.0;
+    let maxParticlesCount = 700;
+
+    function initThree() {
+      const container = document.getElementById('three-canvas-container');
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      // Create Scene
+      scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x080810, 0.015);
+
+      // Create Camera
+      camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
+      camera.position.z = 25;
+
+      // Create WebGL Renderer
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // Create Floating 3D Cyber-Character Core Structure (Geometric Core)
+      const coreGroup = new THREE.Group();
+
+      // Geometry 1: Outer Hologram Frame Wireframe Sphere
+      const outerGeo = new THREE.IcosahedronGeometry(6, 2);
+      const outerMat = new THREE.MeshBasicMaterial({
+        color: customColorPrimary,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.15
+      });
+      coreOuterWires = new THREE.Mesh(outerGeo, outerMat);
+      coreGroup.add(coreOuterWires);
+
+      // Geometry 2: Floating Core Node Core
+      const innerGeo = new THREE.IcosahedronGeometry(3.5, 1);
+      const innerMat = new THREE.MeshBasicMaterial({
+        color: 0xff007f, // Neon Magenta
+        wireframe: true,
+        transparent: true,
+        opacity: 0.35
+      });
+      floatingCoreMesh = new THREE.Mesh(innerGeo, innerMat);
+      coreGroup.add(floatingCoreMesh);
+
+      // Geometry 3: Particle Halo Orbiting the Core Character
+      const particleCount = maxParticlesCount;
+      const particlesGeo = new THREE.BufferGeometry();
+      const positions = new Float32Array(particleCount * 3);
+      const colors = new Float32Array(particleCount * 3);
+
+      for (let i = 0; i < particleCount; i++) {
+        // Orbit mathematics to group particles around central floating node
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos((Math.random() * 2) - 1);
+        const radius = 7 + Math.random() * 5;
+
+        positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+        positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+        positions[i * 3 + 2] = radius * Math.cos(phi);
+
+        // Mix custom colors
+        const mixRatio = Math.random();
+        colors[i * 3] = mixRatio * customColorPrimary.r + (1 - mixRatio) * 1.0; // mix of cyberCyan & Magenta/White
+        colors[i * 3 + 1] = mixRatio * customColorPrimary.g;
+        colors[i * 3 + 2] = mixRatio * customColorPrimary.b + (1 - mixRatio) * 0.5;
+      }
+
+      particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      particlesGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+      // Make round particle texture procedurally using HTML canvas to avoid external asset loading errors
+      const particleTexture = createCircularTexture();
+
+      const particlesMat = new THREE.PointsMaterial({
+        size: 0.25,
+        map: particleTexture,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+        vertexColors: true
+      });
+
+      particles = new THREE.Points(particlesGeo, particlesMat);
+      coreGroup.add(particles);
+
+      scene.add(coreGroup);
+
+      // Geometry 4: Background Floating Galactic Stars Grid
+      const bgCount = 500;
+      const bgGeo = new THREE.BufferGeometry();
+      const bgPositions = new Float32Array(bgCount * 3);
+      for(let i=0; i<bgCount; i++) {
+        bgPositions[i*3] = (Math.random() - 0.5) * 100;
+        bgPositions[i*3+1] = (Math.random() - 0.5) * 100;
+        bgPositions[i*3+2] = (Math.random() - 0.5) * 100;
+      }
+      bgGeo.setAttribute('position', new THREE.BufferAttribute(bgPositions, 3));
+      const bgMat = new THREE.PointsMaterial({
+        size: 0.1,
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.3
+      });
+      ambientParticleGrid = new THREE.Points(bgGeo, bgMat);
+      scene.add(ambientParticleGrid);
+
+      // Light Sources
+      const pointLight = new THREE.PointLight(0x00f0ff, 2, 50);
+      pointLight.position.set(10, 10, 10);
+      scene.add(pointLight);
+
+      const ambientLight = new THREE.AmbientLight(0x111122);
+      scene.add(ambientLight);
+
+      // Mouse Interaction with Mesh rotation
+      let mouseX = 0;
+      let mouseY = 0;
+      let targetX = 0;
+      let targetY = 0;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX - window.innerWidth / 2) / 100;
+        mouseY = (e.clientY - window.innerHeight / 2) / 100;
+      });
+
+      // Responsive Canvas resize event
+      window.addEventListener('resize', () => {
+        const newW = container.clientWidth;
+        const newH = container.clientHeight;
+        camera.aspect = newW / newH;
+        camera.updateProjectionMatrix();
+        renderer.setSize(newW, newH);
+      });
+
+      // Simple Clock for fluid sin-wave floating movement
+      const clock = new THREE.Clock();
+
+      // Core Animation Loop
+      function animate() {
+        requestAnimationFrame(animate);
+
+        const elapsedTime = clock.getElapsedTime();
+
+        // Target smooth mouse lag interpolation
+        targetX += (mouseX - targetX) * 0.05;
+        targetY += (mouseY - targetY) * 0.05;
+
+        // Apply delicate float amplitude and rotation
+        coreGroup.position.y = Math.sin(elapsedTime * 1.5) * 1.5;
+        coreGroup.position.x = Math.cos(elapsedTime * 0.8) * 0.8;
+
+        // Parallax scroll-based position offset
+        const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+        coreGroup.position.z = scrollPercent * -15; // float backwards on scroll depth
+        
+        // Dynamic viewport shifting based on scroll percentage to keep visual alignment stylish
+        if (window.innerWidth > 1024) {
+          // Push 3D mesh rightwards in hero, center/shift it during scrolls
+          coreGroup.position.x += (5 - coreGroup.position.x) * 0.05;
+        }
+
+        // Apply user-defined variables
+        const speedMultiplier = rotationSpeedFactor * 0.005;
+        
+        coreOuterWires.rotation.y += speedMultiplier;
+        coreOuterWires.rotation.x += speedMultiplier * 0.5;
+
+        floatingCoreMesh.rotation.y -= speedMultiplier * 1.5;
+        floatingCoreMesh.rotation.z += speedMultiplier;
+
+        particles.rotation.y += speedMultiplier * 0.4;
+
+        // Rotate background grid slowly
+        ambientParticleGrid.rotation.y += 0.0002;
+
+        // Subtle camera track based on mouse movement
+        camera.position.x += (targetX - camera.position.x) * 0.05;
+        camera.position.y += (-targetY - camera.position.y) * 0.05;
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+        renderer.render(scene, camera);
+      }
+
+      // Procedural Circle Texture Generator
+      function createCircularTexture() {
+        const size = 64;
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        // Draw radial glowing gradient
+        const gradient = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+        gradient.addColorStop(0, 'rgba(255,255,255,1)');
+        gradient.addColorStop(0.2, 'rgba(0,240,255,0.8)');
+        gradient.addColorStop(0.5, 'rgba(139,92,246,0.2)');
+        gradient.addColorStop(1, 'rgba(0,0,0,0)');
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, size, size);
+
+        const texture = new THREE.Texture(canvas);
+        texture.needsUpdate = true;
+        return texture;
+      }
+
+      // Start loop
+      animate();
+    }
+
+    // Dynamic customization options
+    function changePrimaryColor(hexColor) {
+      customColorPrimary.set(hexColor);
+      if (coreOuterWires) {
+        coreOuterWires.material.color.set(hexColor);
+      }
+      playBeepSound(1000, 0.1);
+    }
+
+    function setSystemPreset(presetName) {
+      if (presetName === 'cyberspace') {
+        changePrimaryColor('#00f0ff');
+        rotationSpeedFactor = 1.0;
+        document.getElementById('control-speed').value = 1.0;
+      } else if (presetName === 'hyperdrive') {
+        changePrimaryColor('#ff007f');
+        rotationSpeedFactor = 4.0;
+        document.getElementById('control-speed').value = 4.0;
+      }
+    }
+
+    // Hook HTML Controls to dynamic values
+    document.getElementById('control-speed').addEventListener('input', (e) => {
+      rotationSpeedFactor = parseFloat(e.target.value);
+    });
+
+    document.getElementById('control-energy').addEventListener('input', (e) => {
+      const val = parseInt(e.target.value);
+      // Change opacity or simulated activity based on particle input
+      if (particles && particles.material) {
+        particles.material.size = 0.1 + (val / 1500) * 0.4;
+      }
+    });
+
+    // Run when window fully loads
+    window.onload = function() {
+      initThree();
+    };
+  </script>
+
+  <!-- Interactive Premium Animations & Micro-effects (GSAP + Mouse Follow) -->
+  <script>
+    // Initialize GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Dynamic Frame counter metric
+    let frameCount = 0;
+    let fps = 60;
+    let lastTime = performance.now();
+    
+    function updateFPS() {
+      frameCount++;
+      const time = performance.now();
+      if (time >= lastTime + 1000) {
+        fps = Math.round((frameCount * 1000) / (time - lastTime));
+        document.getElementById('metric-fps').innerText = `${fps} FPS`;
+        frameCount = 0;
+        lastTime = time;
+      }
+      requestAnimationFrame(updateFPS);
+    }
+    requestAnimationFrame(updateFPS);
+
+    // Simple network simulated dynamic latency
+    setInterval(() => {
+      const dynamicLatency = Math.floor(Math.random() * 8) + 8;
+      document.getElementById('metric-latency').innerText = `${dynamicLatency}ms`;
+    }, 2500);
+
+    // Premium Micro Mouse Cursor tracking
+    const cursor = document.getElementById('custom-cursor');
+    const cursorDot = document.getElementById('custom-cursor-dot');
+
+    window.addEventListener('mousemove', (e) => {
+      gsap.to(cursor, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.15,
+        ease: "power2.out"
+      });
+      gsap.to(cursorDot, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.02
+      });
+    });
+
+    // Hover effect expansions for interaction feedback
+    document.querySelectorAll('a, button, input[type="range"], .glass-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width = '35px';
+        cursor.style.height = '35px';
+        cursor.style.borderColor = '#ff007f';
+        cursor.style.backgroundColor = 'rgba(255, 0, 127, 0.1)';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width = '20px';
+        cursor.style.height = '20px';
+        cursor.style.borderColor = '#00f0ff';
+        cursor.style.backgroundColor = 'transparent';
+      });
+    });
+
+    // Smooth scroll transitions utilizing timeline elements
+    gsap.from('#hero h1 span', {
+      duration: 1.5,
+      y: 100,
+      opacity: 0,
+      stagger: 0.3,
+      ease: "power4.out"
+    });
+
+    gsap.from('#hero p', {
+      duration: 1.2,
+      opacity: 0,
+      y: 30,
+      delay: 0.8,
+      ease: "power3.out"
+    });
+
+    // Project Grid slide trigger animation
+    gsap.from('#projects .glass-card', {
+      scrollTrigger: {
+        trigger: '#projects',
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      },
+      duration: 1.2,
+      opacity: 0,
+      y: 80,
+      stagger: 0.2,
+      ease: "power3.out"
+    });
+
+    // Skill meters visual slide-in trigger
+    gsap.from('#skills .w-full div', {
+      scrollTrigger: {
+        trigger: '#skills',
+        start: 'top 75%'
+      },
+      scaleX: 0,
+      transformOrigin: "left center",
+      duration: 1.5,
+      stagger: 0.2,
+      ease: "power4.out"
+    });
+
+    // Interactive Modal Controller
+    function openProjectModal(title, desc, stack) {
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-desc').innerText = desc;
+      
+      const stackContainer = document.getElementById('modal-stack');
+      stackContainer.innerHTML = '';
+      
+      stack.split(',').forEach(tech => {
+        const tag = document.createElement('span');
+        tag.className = "bg-neonCyan/10 text-neonCyan text-[11px] font-mono px-3 py-1 rounded border border-neonCyan/20";
+        tag.innerText = tech.trim();
+        stackContainer.appendChild(tag);
+      });
+
+      const modal = document.getElementById('project-modal');
+      modal.style.display = 'flex';
+      gsap.from(modal.querySelector('.glass-card'), {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.3,
+        ease: "power3.out"
+      });
+    }
+
+    function closeProjectModal() {
+      const modal = document.getElementById('project-modal');
+      gsap.to(modal.querySelector('.glass-card'), {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.2,
+        ease: "power3.in",
+        onComplete: () => {
+          modal.style.display = 'none';
+        }
+      });
+    }
+
+    // Contact Form Action Logic (No actual redirects)
+    function handleContactSubmit(event) {
+      event.preventDefault();
+      
+      // Simulate transmitting signal
+      playBeepSound(1400, 0.4, 'triangle');
+      const successOverlay = document.getElementById('contact-success-msg');
+      successOverlay.classList.remove('hidden');
+      
+      gsap.from(successOverlay, {
+        opacity: 0,
+        scale: 0.95,
+        duration: 0.4,
+        ease: "power3.out"
+      });
+    }
+
+    function dismissSuccessMessage() {
+      const successOverlay = document.getElementById('contact-success-msg');
+      gsap.to(successOverlay, {
+        opacity: 0,
+        duration: 0.3,
+        onComplete: () => {
+          successOverlay.classList.add('hidden');
+          document.getElementById('contact-form').reset();
+        }
+      });
+    }
+  </script>
+<!-- navigate -->
+ 
+<script>
+    const list = document.querySelectorAll('.list');
+function activeLink(){
+    list.forEach((item)=>
+    item.classList.remove("active"));
+    this.classList.add("active");
+    
+}
+list.forEach((item)=>
+item.addEventListener("click",activeLink));
+/*numb-1*/
+const numb = document.querySelector(".numb");
+let counter = 0;
+setInterval(()=>{
+   if(counter == 100){
+    clearInterval();
+   }else{
+    counter+=1;
+    numb.textContent = counter + "%";
+   }
+},30);
+/*numb-1*/
+
+  /*numb-2*/
+  const count = document.querySelector(".count");
+let process = 0;
+setInterval(()=>{
+   if(process == 90){
+    clearInterval();
+   }else{
+    process+=1;
+    count.textContent = process + "%";
+   }
+},30);
+ /*numb-2*/
+ /*numb-3*/
+ const nandhu = document.querySelector(".nandhu");
+let priya = 0;
+setInterval(()=>{
+   if(priya == 80){
+    clearInterval();
+   }else{
+    priya+=1;
+    nandhu.textContent = priya + "%";
+   }
+},40);
+ /*numb-3*/
+
+ /*numb-4*/
+ const pooru = document.querySelector(".pooru");
+let sow = 0;
+setInterval(()=>{
+   if(sow == 60){
+    clearInterval();
+   }else{
+    sow+=1;
+    pooru.textContent = sow + "%";
+   }
+},40);
+  /*numb-4*/
+
+  /* numb-5*/
+  const harshu = document.querySelector(".harshu");
+let dharu = 0;
+setInterval(()=>{
+   if(dharu == 60){
+    clearInterval();
+   }else{
+    dharu+=1;
+    harshu.textContent = dharu + "%";
+   }
+},40);
+  /* numb-5*/
+
+  var typed = new Typed(".multiple-text",{
+strings: ["Web Developer","Frontend Developer"],
+typeSpeed: 100,
+backSpeed: 100,
+backDelay: 1000,
+loop: true
+ })
+
+
+
+</script>
+ <!-- navigate -->
+</body>
+</html>
